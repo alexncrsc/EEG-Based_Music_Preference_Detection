@@ -1,8 +1,8 @@
-#Spotify_recommendation_EEG_data_model
+#Music Preferences Based on EEG Data
 
 
 ## Description
-This project involves using EEG data to control Spotify playback based on the user's brain activity interpreted through machine learning models. The application integrates with Spotify's API to manage music playlists based on EEG signals that suggest user preferences.
+This project involves using EEG data to analyze the music preferences of a user.
 
 ## Table of Contents
 - [Functionality 1: EEG Music Preference Analysis](#functionality-1-eeg-music-preference-analysis)
@@ -21,8 +21,8 @@ This code handles EEG data acquisition, processes the EEG signals to extract fea
 - NumPy
 - Matplotlib
 - Joblib
+- TensorGlow
+- tba
 
 ### How to Run
-To run this script, ensure your EEG device is properly set up and connected. Modify the serial port settings as per your configuration. Use the following command:
-```bash
-python eeg_music_preference.py
+- tba
