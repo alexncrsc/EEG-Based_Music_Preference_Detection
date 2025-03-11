@@ -17,7 +17,7 @@ random.seed(SEED)
 np.random.seed(SEED)
 tf.random.set_seed(SEED)
 
-# Ensure TensorFlow uses deterministic operations (if applicable)
+
 os.environ["TF_DETERMINISTIC_OPS"] = "0"
 os.environ["PYTHONHASHSEED"] = str(SEED)
 
@@ -42,7 +42,7 @@ def bandpass_filter(eeg_data, sfreq=250, l_freq=4, h_freq=40):
     """
     filtered_data = []
     for trial in eeg_data:
-        # trial shape: (num_samples, num_channels)
+
         # MNE expects (num_channels, num_samples)
         trial_T = trial.T  
         trial_filtered = mne.filter.filter_data(
@@ -102,13 +102,13 @@ def load_eeg_data(path, label):
             data = np.load(os.path.join(path, file))
             data = data.astype(np.float64)
             
-            # Remove first few samples if needed
+            # skip
             if data.shape[1] > skip_samples:
                 data = data[:, skip_samples:]
             else:
                 continue
             
-            # We expect shape (8, 3875 - skip_samples), but let's skip strict check
+
             if data.shape[0] != 8:
                 print(f"Skipping {file} due to incorrect shape: {data.shape}")
                 continue
