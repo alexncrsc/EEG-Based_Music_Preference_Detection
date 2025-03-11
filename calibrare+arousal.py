@@ -18,11 +18,11 @@ from spotipy.oauth2 import SpotifyOAuth
 # ==============================
 BoardShim.enable_dev_board_logger()
 params = BrainFlowInputParams()
-params.serial_port = "/dev/cu.usbserial-DQ0081Z3"  # Example for Mac
+params.serial_port = "/dev/cu.usbserial-DQ0081Z3"  
 board = BoardShim(0, params)
 
 sfreq = 250
-duration = 20       # Time in seconds of music playback/recording
+duration = 20      
 required_samples = 4500
 HP_CUTOFF = 1.0
 NOTCH_FREQ = 50.0
@@ -73,24 +73,24 @@ def save_eeg_data(eeg_data, song_name, user_id, label="", arousal_level=""):
 
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
 
-    # Build an informative filename in the order: [arousal]_[songName]_[optional label]_[timestamp].npy
+    #filename format
     file_name_parts = []
 
-    # If arousal_level is provided, put it first
+    #arousal at the start of the filename
     if arousal_level:
         file_name_parts.append(arousal_level)
 
-    # Next the song name (with underscores instead of spaces)
+    #Song name second
     file_name_parts.append(song_name.replace(" ", "_"))
 
-    # Optionally insert the label if it exists
+    # liked/dislike label
     if label:
         file_name_parts.append(label)
 
-    # Finally the timestamp
+    # timestamp to avoid overwriting
     file_name_parts.append(timestamp)
 
-    # Join everything with underscores
+    #undescrore
     file_name = "_".join(file_name_parts) + ".npy"
     file_path = os.path.join(base_path, file_name)
 
@@ -109,7 +109,7 @@ def start_streaming(record_time):
     board.prepare_session()
     print("[INFO] Board session prepared.")
 
-    # Example: configure each channel if needed (adapt to your board)
+    # starting command brainflow for each channel
     for ch in range(1, 9):
         command_str = f"x{ch}060110X"
         board.config_board(command_str)
@@ -127,7 +127,7 @@ def start_streaming(record_time):
         time.sleep(0.01)  # slight pause to allow data buffer to fill
         data = board.get_board_data()
         if data.shape[1] > 0:
-            chunk = data[1:9, :]  # channels [1..8], adjust if needed
+            chunk = data[1:9, :]  # channels [1..8]
             total_data.append(chunk)
 
     # Stop and release the board
