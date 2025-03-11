@@ -17,14 +17,14 @@ random.seed(SEED)
 np.random.seed(SEED)
 tf.random.set_seed(SEED)
 
-# Ensure TensorFlow uses deterministic operations (if applicable)
+
 os.environ["TF_DETERMINISTIC_OPS"] = "0"
 os.environ["PYTHONHASHSEED"] = str(SEED)
 
 ###############################################################################
 #                             1. PARAMETERS & PATHS
 ###############################################################################
-fs = 250             # Sampling frequency
+fs = 250            
 skip_secs = 2.5
 skip_samples = int(skip_secs * fs)
 
@@ -42,7 +42,6 @@ def bandpass_filter(eeg_data, sfreq=250, l_freq=4, h_freq=40):
     """
     filtered_data = []
     for trial in eeg_data:
-        # trial shape: (num_samples, num_channels)
         # MNE expects (num_channels, num_samples)
         trial_T = trial.T  
         trial_filtered = mne.filter.filter_data(
@@ -59,7 +58,7 @@ def wavelet_denoise_one_channel(eeg_signal, wavelet='db4', level=2):
     thresholded_coeffs = []
     for i, coeff in enumerate(coeffs):
         if i == 0:
-            thresholded_coeffs.append(coeff)  # do not threshold approximation
+            thresholded_coeffs.append(coeff)  
         else:
             threshold = np.median(np.abs(coeff)) / 0.6745
             coeff_new = pywt.threshold(coeff, threshold, mode='soft')
@@ -101,13 +100,12 @@ def load_eeg_data(path, label):
             data = np.load(os.path.join(path, file))
             data = data.astype(np.float64)
             
-            # Remove first few samples if needed
+            # skip
             if data.shape[1] > skip_samples:
                 data = data[:, skip_samples:]
             else:
                 continue
-            
-            # We expect shape (8, 3875 - skip_samples), but let's just skip strict check
+
             if data.shape[0] != 8:
                 print(f"Skipping {file} due to incorrect shape: {data.shape}")
                 continue
@@ -261,18 +259,10 @@ if __name__:
     all_data = np.array(liked_data + disliked_data, dtype=object)  # list -> np.array of shape (num_trials,)
     all_labels = np.array(liked_labels + disliked_labels)
 
-    # The loaded data each has shape (8, N), so let's transpose them
-    # to be (N, 8). We can do that below after we gather them into a single array.
-    
-    # 2) Convert each trial to shape (num_samples, num_channels)
-    #    and put them into a single 3D array: (num_trials, num_samples, num_channels).
-    trials_list = []
     for arr in all_data:  # each arr shape = (8, 3875 - skip_samples)
         arr_T = arr.T  # shape = (samples, 8)
         trials_list.append(arr_T)
-    # Now let's figure out the min or max samples, but we can just store in an object array again:
-    # We'll convert to a single array if all are the same length. Assuming they are:
-    # A safer approach is to ensure they all have the same number of samples.
+    #2)
     trials_array = np.stack(trials_list, axis=0).astype(np.float64)  # shape (num_trials, num_samples, 8)
     print(f"Raw EEG data shape: {trials_array.shape}")
 
