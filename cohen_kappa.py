@@ -120,7 +120,7 @@ def run_pipeline_cv(all_data, all_labels, n_splits=5):
             kappa = cohen_kappa_score(y_test, y_pred)
 
             train_loss, test_loss = None, None
-            if hasattr(model, "predict_proba"):  # If model supports probability output
+            if hasattr(model, "predict_proba"):  # if the model support the predict_proba
                 y_train_prob = model.predict_proba(X_train_pca)
                 y_test_prob = model.predict_proba(X_test_pca)
                 train_loss = log_loss(y_train, y_train_prob)
