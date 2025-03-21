@@ -107,4 +107,26 @@ A Transformer model was trained on time-windowed EEG feature sequences.
 ---
 
 ## 📁 Project Structure
+## 📂 Files and Directory Structure
+
+This repository contains various scripts, datasets, and visualization tools related to EEG-based music preference analysis.
+
+| File Name | Description |
+|-----------|------------|
+| **20_martie.zip** | EEG data from a single recording session (npy format, 20-minute session). |
+| **Deep_Learning_approach.py** | Implements a deep learning model using Transformer blocks and CNN layers. |
+| **Electrodes_first_placement_setup.jpeg** | Image of the first electrode placement. |
+| **Electrodes_second_placement_setup.jpeg** | Image of the second electrode placement (8-electrode configuration). |
+| **OpenBCI_Cyton_Board.jpeg** | Image of the OpenBCI Cyton board used for EEG recording. |
+| **PSD_plot_visualization.py** | Script for visualizing Power Spectral Density (PSD) features extracted from EEG data. |
+| **README.md** | The project documentation and instructions. |
+| **Recorded_data_visualization.py** | Script for visualizing recorded EEG data . |
+| **SNR_check.py** | Script for checking Signal-to-Noise Ratio (SNR) of EEG recordings. |
+| **cohen_kappa_sklearn_models_accuracy.py** | Script for evaluating machine learning model performance using Cohen's Kappa score. |
+| **recording_data_script.py** | EEG recording script that does not include arousal metric calculations. |
+| **recording_npy_data+arousal_metric.py** | EEG recording script with arousal metric calculations included. |
+
+This directory structure ensures a clear separation between data collection, preprocessing, feature extraction, model training, and evaluation.
+
+
 
