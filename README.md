@@ -106,7 +106,7 @@ A Transformer model was trained on time-windowed EEG feature sequences.
 
 ---
 
-## 📁 Project Structure
+
 ## 📂 Files and Directory Structure
 
 This repository contains various scripts, datasets, and visualization tools related to EEG-based music preference analysis.
