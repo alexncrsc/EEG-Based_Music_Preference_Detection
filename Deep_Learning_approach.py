@@ -59,7 +59,6 @@ def wavelet_denoise_one_channel(eeg_signal, wavelet='db4', level=2):
     thresholded_coeffs = []
     for i, coeff in enumerate(coeffs):
         if i == 0:
-            # Approximation coefficients (low freq) typically not thresholded
             thresholded_coeffs.append(coeff)
         else:
             threshold = np.median(np.abs(coeff)) / 0.6745
