@@ -1,6 +1,6 @@
 # EEG-Based Music Preference Detection
 
-This project explores how brain signals can be used to detect whether someone enjoys a song. Using the OpenBCI Cyton EEG headset and a real-time Spotify playback system, it records brain activity while users listen to music. The system performs deep signal processing, extracts time-frequency features, and uses them to classify user preferences through machine learning and deep learning models.
+This project explores how brain signals can be used to detect whether someone enjoys a song. Using the OpenBCI Cyton EEG headset and a real-time Spotify playback system, it records brain activity while users listen to music. The system performs deep signal processing, extracts features, and uses them to classify user preferences through machine learning and deep learning models.
 
 ## Minimum Viable Product (MVP)
 
