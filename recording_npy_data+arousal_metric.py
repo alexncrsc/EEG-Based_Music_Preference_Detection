@@ -141,17 +141,17 @@ def start_streaming(record_time):
     else:
         combined_data = np.zeros((8, 0))
 
-    # Trim or check if we have enough samples
+   
     sample_count = combined_data.shape[1]
     print(f"[INFO] Total collected samples: {sample_count}")
 
-    # If we want exactly 'required_samples' for consistency, we can trim:
+   
     if sample_count >= required_samples:
         combined_data = combined_data[:, :required_samples]
     else:
         print("[WARNING] Not enough samples were collected to reach the required amount.")
 
-    # Perform filtering if there is data
+   
     if combined_data.shape[1] > 0:
         for ch_idx in range(combined_data.shape[0]):
             # High-pass 1 Hz
@@ -173,54 +173,50 @@ def start_streaming(record_time):
 #   SPOTIFY PLAYBACK & EEG
 # ==============================
 def play_music_and_collect_eeg():
-    """
-    Chooses a random track from one of the playlists (liked/disliked),
-    starts Spotify playback, records EEG inline for 'duration + 10' seconds,
-    then collects user arousal and saves data immediately.
-    """
     global use_playlist_1
     chosen_uris = track_uris_1 if use_playlist_1 else track_uris_2
     track_uri = random.choice(chosen_uris)
     use_playlist_1 = not use_playlist_1  # alternate next time
 
-    # Retrieve track info
+    #retrieve track info
     track_info = sp.track(track_uri)
     track_duration = track_info['duration_ms']
     track_name = track_info['name']
     label = "liked" if chosen_uris is track_uris_1 else "disliked"
 
-    # Random start position if the track is long enough
+    #ranndom start position if the track is long enough
     max_start = max(0, track_duration - (duration + 15) * 1000)
     start_pos = random.randint(0, max_start) if max_start > 0 else 0
 
-    # Start Spotify playback
+    #start Spotify playback
     sp.start_playback(uris=[track_uri])
     sp.seek_track(start_pos)
     print(f"[INFO] Playing '{track_name}' ({label.upper()}). Starting at {start_pos} ms.")
 
-    # Record EEG inline for (duration + 10) seconds
-    # You can adjust the +10 if you'd like more/less buffer
+
+
+    
     record_seconds = duration 
     eeg_array = start_streaming(record_time=record_seconds)
 
-    # Pause the music
+    #pause the music
     sp.pause_playback()
     print("[INFO] Playback paused. Now collecting user arousal feedback...")
 
-    # Prompt for arousal level
+    #prompt for arousal level
     try:
         arousal_level = input("Enter your arousal level for this song (1-9): ")
     except:
         arousal_level = "NA"
 
-    # 15-second baseline/quiet period before next track
+    #15-second baseline/quiet period before next track
     print("[INFO] 15-second break before next track.")
     time.sleep(15)
 
-    # Check if we have enough data (optional)
+    #check if we have enough data (optional)
     if eeg_array.shape[1] < required_samples:
         print("[WARNING] EEG data has fewer than the required samples. Saving anyway.")
-    # Save the data for this trial
+    #save the data for this trial
     save_eeg_data(eeg_array, track_name, user_id=3, label=label, arousal_level=arousal_level)
 
     return eeg_array
@@ -229,7 +225,7 @@ def play_music_and_collect_eeg():
 #            MAIN
 # ==============================
 def main():
-    num_trials = 8  # or however many songs you want
+    num_trials = 8  
     for i in range(num_trials):
         print(f"--- TRIAL {i+1}/{num_trials} ---")
         result = play_music_and_collect_eeg()
