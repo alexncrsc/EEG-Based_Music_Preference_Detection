@@ -55,7 +55,7 @@ wavelet_coeffs_noise = np.array(wavelet_coeffs_noise)
 # --- SNR ---
 signal_power = np.mean(np.abs(eeg_data) ** 2, axis=(1, 2))  # puterea signal
 noise_power = np.mean(np.abs(wavelet_coeffs_noise) ** 2, axis=(1, 2))  #puterea noise
-snr_db = 20 * np.log10(signal_power / noise_power)  # snr in dB
+snr_db = 10 * np.log10(signal_power / noise_power)  # snr in dB
 print(signal_power / noise_power)
 print(snr_db)
 
