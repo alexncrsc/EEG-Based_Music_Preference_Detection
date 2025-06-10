@@ -274,7 +274,7 @@ def create_transformer_model(max_windows, feat_dim, num_heads=4, ff_dim=64, num_
     x = layers.BatchNormalization()(x)
 
     
-    x = layers.Dropout(0.5)(x)
+    x = layers.Dropout(0.7)(x)
     x = layers.MaxPooling1D(pool_size=2)(x)
 
     
@@ -363,10 +363,12 @@ if __name__ == "__main__":
         X_test  = pad_sequences_to_fixed(test_features_seq, max_windows, feat_dim)
 
       
-        mean_val = np.mean(X_train)
-        std_val  = np.std(X_train)
-        X_train_norm = (X_train - mean_val) / (std_val + 1e-8)
-        X_test_norm  = (X_test - mean_val) / (std_val + 1e-8)
+        mean_per_feature = np.mean(X_train, axis=(0, 1))  # shape: (112,)
+        std_per_feature = np.std(X_train, axis=(0, 1))    # shape: (112,)
+
+
+        X_train_norm = (X_train - mean_per_feature) / (std_per_feature + 1e-8)
+        X_test_norm  = (X_test - mean_per_feature) / (std_per_feature + 1e-8)
         print(max_windows)
         print(feat_dim)
         
