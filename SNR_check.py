@@ -9,7 +9,7 @@ sampling_rate = 250  # sfreq
 cut_start_sec = 2.5  
 low_freq, high_freq = 4, 40  # bandpass filter range
 frequencies = np.linspace(4, 40, 50)  # freq range
-wavelet = 'cmor'  # Complex Morlet wavelet
+wavelet = 'db4'  # Complex Morlet wavelet
 
 # load data
 baseline_data = np.load(baseline_file)  
