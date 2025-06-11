@@ -363,8 +363,8 @@ if __name__ == "__main__":
         X_test  = pad_sequences_to_fixed(test_features_seq, max_windows, feat_dim)
 
       
-        mean_per_feature = np.mean(X_train, axis=(0, 1))  # shape: (112,)
-        std_per_feature = np.std(X_train, axis=(0, 1))    # shape: (112,)
+        mean_per_feature = np.mean(X_train, axis=(0, 1))  
+        std_per_feature = np.std(X_train, axis=(0, 1))    
 
 
         X_train_norm = (X_train - mean_per_feature) / (std_per_feature + 1e-8)
@@ -386,7 +386,7 @@ if __name__ == "__main__":
         
 
         X_train_sub, X_val_sub, y_train_sub, y_val_sub = train_test_split(
-        X_train_norm, y_train, test_size=0.5, random_state=42, stratify=y_train)
+        X_train_norm, y_train, test_size=0.2, random_state=42, stratify=y_train)
 
        
         history = model.fit(
