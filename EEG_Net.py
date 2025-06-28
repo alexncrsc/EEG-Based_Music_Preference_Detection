@@ -146,12 +146,10 @@ if __name__ == "__main__":
         model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
         # 6) Train
-        early_stop = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
         model.fit(
             X_train, y_train,
             validation_data=(X_test, y_test),
             epochs=50, batch_size=16, verbose=0,
-            callbacks=[early_stop]
         )
 
         # Evaluare
